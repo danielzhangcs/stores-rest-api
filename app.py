@@ -1,4 +1,5 @@
 from flask import Flask
+import os
 from flask_restful import Api
 from flask_jwt import JWT
 
@@ -15,7 +16,7 @@ app.secret_key = "kun"
 jwt = JWT(app, authenticate, identity)
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite///data.db")
 
 api.add_resource(Item, "/item/<string:name>")
 api.add_resource(ItemList, "/items")
